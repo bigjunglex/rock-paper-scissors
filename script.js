@@ -1,53 +1,60 @@
 const weapons = ['rock', 'paper', 'scissors'];
 let pScore = 0,
     eScore = 0;
+const result  = document.getElementById("result");
 
-function getComputerChoice(array){
+    document.getElementById("reset").addEventListener("click", function(){
+        pScore = 0
+        eScore = 0
+        result.textContent = `RESET! Current score: You --> ${pScore} : ${eScore} <-- Enemy`
+    });
+
+
+    document.getElementById("rock").addEventListener("click", function() {
+        if (pScore <= 5 && eScore <= 5){
+            oneRound(weapons[0])};
+    });
+    document.getElementById("paper").addEventListener("click", function() {
+        if (pScore <= 5 && eScore <= 5){
+            oneRound(weapons[1])};
+    });
+    document.getElementById("scissors").addEventListener("click", function() {
+        if (pScore <= 5 && eScore <= 5){
+            oneRound(weapons[2])};
+    });
+
+function getComputerChoice(array) {
     return array[Math.floor(Math.random() * array.length)]
 };
 
 
-function oneRound(enemy) {
-    let player = prompt("Choose your weapon: rock, paper or scissors").toLowerCase();
-    if (player === enemy) {
-        return 0
-    }else if (player === 'rock' && enemy === 'scissors'){
-        return 1
-    }else if (player === 'rock' && enemy === 'paper'){
-        return 2
-    }else if (player === 'paper' && enemy === 'scissors'){
-        return 2
-    }else if (player === 'paper' && enemy === 'rock'){
-        return 1
-    }else if (player === 'scissors' && enemy === 'rock'){
-        return 2
-    }else if (player === 'scissors' && enemy === 'paper'){
-        return 1
+function oneRound(player) {
+    if (player === getComputerChoice(weapons)) {
+        return result.textContent = `draw! Current score: You --> ${pScore} : ${eScore} <-- Enemy`
+    }else if (player === 'rock' && getComputerChoice(weapons) === 'scissors'){
+        pScore += 1
+        return result.textContent = `you won! Current score: You --> ${pScore} : ${eScore} <-- Enemy`
+    }else if (player === 'rock' && getComputerChoice(weapons) === 'paper'){
+        eScore += 1
+        return result.textContent = `you lose! Current score: You --> ${pScore} : ${eScore} <-- Enemy`
+    }else if (player === 'paper' && getComputerChoice(weapons) === 'scissors'){
+        eScore += 1
+        return result.textContent = `you lose! Current score: You --> ${pScore} : ${eScore} <-- Enemy`
+    }else if (player === 'paper' && getComputerChoice(weapons) === 'rock'){
+        pScore += 1
+        return result.textContent = `you won! Current score: You --> ${pScore} : ${eScore} <-- Enemy`
+    }else if (player === 'scissors' && getComputerChoice(weapons) === 'rock'){
+        eScore += 1
+        return result.textContent = `you lose! Current score: You --> ${pScore} : ${eScore} <-- Enemy`
+    }else if (player === 'scissors' && getComputerChoice(weapons) === 'paper'){
+        pScore += 1
+        return result.textContent = `you won! Current score: You --> ${pScore} : ${eScore} <-- Enemy`
+    }
+
+    if (eScore === 5) {
+        result.textContent = "---- YOU HAVE LOST ----"
+    }else if (pScore === 5) {
+        result.textContent = "---- YOU HAVE WON ----"
     }
 };
-
-function game(){
-    for (let i = 1; i < 6; i++){
-        let x = oneRound(getComputerChoice(weapons))
-        if (x === 1){
-            pScore += 1
-            console.log(`Your score: ${pScore} Enemy : ${eScore}`)
-        }else if (x === 2){
-            eScore +=1
-            console.log(`Your score: ${pScore} Enemy : ${eScore}`)
-        }else{
-            console.log('Tie')
-            console.log(`Your score: ${pScore} Enemy : ${eScore}`)
-        }  
-    }
-    
-
-    if (pScore > eScore){
-        return `You have won! Your score: ${pScore} Enemy : ${eScore}`
-    }else if (eScore > pScore){
-        return `You have lost! Your score: ${pScore} Enemy : ${eScore}` 
-    }
-}
-
-console.log(game())
 
